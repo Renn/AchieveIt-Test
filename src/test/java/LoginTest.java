@@ -4,12 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.Duration;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 import java.util.stream.Stream;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -17,25 +14,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class LoginTest {
-
-  JavascriptExecutor js;
-  private WebDriver driver;
-  private Map<String, Object> vars;
-
-  @AfterAll
-  static void afterAll() {
-    Driver.quit();
-  }
+public class LoginTest extends TestEnvironment {
 
   static Stream<Arguments> loginInfoProvider() {
-    final String correctUsername = "b6703879-e1e2-499c-8ffe-d8b29f71f156";
-    final String correctPassword = "123456";
     final String wrongUsername = "b6703879-e1e2-1234-8ffe-d8b29f71f156";
     final String wrongPassword = "123456789";
     final String NO_ACCOUNT = "no account!";
@@ -48,35 +32,31 @@ public class LoginTest {
     String longUsername = new String(usernameArray, 0, usernameArray.length);
     String longPassword = new String(passwordArray, 0, passwordArray.length);
     return Stream.of(
-        Arguments.of(correctUsername, correctPassword, true, null),
+        Arguments.of(TEST_USER.getId(), TEST_USER.getPassword(), true, null),
         // Wrong
-        Arguments.of(wrongUsername, correctPassword, false, NO_ACCOUNT),
-        Arguments.of(correctUsername, wrongPassword, false, PASSWORD_WRONG),
+        Arguments.of(wrongUsername, TEST_USER.getPassword(), false, NO_ACCOUNT),
+        Arguments.of(TEST_USER.getId(), wrongPassword, false, PASSWORD_WRONG),
         Arguments.of(wrongUsername, wrongPassword, false, NO_ACCOUNT),
         // Long
-        Arguments.of(longUsername, correctPassword, false, LONG_FIELD),
-        Arguments.of(correctUsername, longPassword, false, LONG_FIELD),
+        Arguments.of(longUsername, TEST_USER.getPassword(), false, LONG_FIELD),
+        Arguments.of(TEST_USER.getId(), longPassword, false, LONG_FIELD),
         Arguments.of(longUsername, longPassword, false, LONG_FIELD));
   }
 
   static Stream<Arguments> emptyInfoProvider() {
-    final String correctUsername = "b6703879-e1e2-499c-8ffe-d8b29f71f156";
-    final String correctPassword = "123456";
     final String empty = "";
     final String ERROR_MESSAGE_EMPTY_USERNAME = "username is required";
     final String ERROR_MESSAGE_EMPTY_PASSWORD = "The password can not be less than 6 digits";
     return Stream.of(
-        Arguments.of(empty, correctPassword, true, false, ERROR_MESSAGE_EMPTY_USERNAME, null),
-        Arguments.of(correctUsername, empty, false, true, null, ERROR_MESSAGE_EMPTY_PASSWORD),
+        Arguments
+            .of(empty, TEST_USER.getPassword(), true, false, ERROR_MESSAGE_EMPTY_USERNAME, null),
+        Arguments.of(TEST_USER.getId(), empty, false, true, null, ERROR_MESSAGE_EMPTY_PASSWORD),
         Arguments.of(
             empty, empty, true, true, ERROR_MESSAGE_EMPTY_USERNAME, ERROR_MESSAGE_EMPTY_PASSWORD));
   }
 
   @BeforeEach
   public void setUp() {
-    driver = Driver.getDriver();
-    js = (JavascriptExecutor) driver;
-    vars = new HashMap<String, Object>();
   }
 
   @AfterEach
@@ -87,7 +67,7 @@ public class LoginTest {
   @MethodSource("loginInfoProvider")
   public void login(String username, String password, boolean success, String errorMessage) {
     driver.get("http://116.62.181.135:8080/achieveit/#/login");
-    //Must refresh to make previous result invisible
+    // Must refresh to make previous result invisible
     driver.navigate().refresh();
     // Input username and password and click login button
     WebElement usernameInput = driver.findElement(By.name("username"));
@@ -122,7 +102,7 @@ public class LoginTest {
       String errorMessageEmptyUsername,
       String errorMessageEmptyPassword) {
     driver.get("http://116.62.181.135:8080/achieveit/#/login");
-    //Must refresh to make previous result invisible
+    // Must refresh to make previous result invisible
     driver.navigate().refresh();
     // Input username and password and click login button
     WebElement usernameInput = driver.findElement(By.name("username"));
