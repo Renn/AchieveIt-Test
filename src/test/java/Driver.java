@@ -6,7 +6,7 @@ public class Driver {
 
   private static WebDriver driver = null;
   private static String[] args = {
-//      "headless",
+      "headless",
 //      "start-maximized",
       "window-size=1552,840"
   };

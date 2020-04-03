@@ -1,12 +1,12 @@
 public class User {
 
-  String id;
-  String username;
-  String password;
-  String mail;
-  String phone;
-  int department;
-  int role;
+  private String id;
+  private String username;
+  private String password;
+  private String mail;
+  private String phone;
+  private int department;
+  private int role;
 
   public User(
       String id,
