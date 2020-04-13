@@ -25,7 +25,7 @@ public class SearchAndShowTest extends TestEnvironment {
     String unexistedSearch = new String(unexistedArray, 0, unexistedArray.length);
     String longSearch = new String(longArray, 0, longArray.length);
     return Stream.of(
-        Arguments.of(TEST_PROJECT.getName(), false, 1, TEST_PROJECT.getName()),
+        Arguments.of(TEST_PROJECT_01.getName(), false, 1, TEST_PROJECT_01.getName()),
         // Use case deleted
         // Arguments.of(TEST_PROJECT.getId(), false, 1, TEST_PROJECT.getName()),
         Arguments.of(TEST_USER.getUsername(), false, 3, TEST_USER.getUsername()),

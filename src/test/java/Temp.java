@@ -1,13 +1,14 @@
 import java.text.SimpleDateFormat;
-import java.util.GregorianCalendar;
+import java.util.Date;
 import org.junit.jupiter.api.Test;
 
 public class Temp {
 
   @Test
-  void temp() {
-    GregorianCalendar gc = new GregorianCalendar(2020, 0, 1);
-    SimpleDateFormat formatter = new SimpleDateFormat();
-    System.out.print(gc.getTimeInMillis());
+  void temp() throws Exception {
+    Date date = new Date(1577808000000L);
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+    System.out.print(format.format(date));
+
   }
 }

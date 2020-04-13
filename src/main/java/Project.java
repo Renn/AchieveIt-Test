@@ -14,6 +14,28 @@ public class Project {
   private String milestones;
   private int status;
 
+  public Project(String id, String name, String managerId, String monitorId,
+      String clientId, Date startDate, Date endDate, String frameworks) {
+    this.id = id;
+    this.name = name;
+    this.managerId = managerId;
+    this.monitorId = monitorId;
+    this.clientId = clientId;
+    this.startDate = startDate;
+    this.endDate = endDate;
+    this.frameworks = frameworks;
+  }
+
+  public Project(String id, String name, String managerId, String monitorId,
+      String clientId, String frameworks) {
+    this.id = id;
+    this.name = name;
+    this.managerId = managerId;
+    this.monitorId = monitorId;
+    this.clientId = clientId;
+    this.frameworks = frameworks;
+  }
+
   public Project(
       String id,
       String name,

@@ -95,6 +95,7 @@ public class LoginTest extends TestEnvironment {
   @ParameterizedTest
   @MethodSource("emptyInfoProvider")
   public void loginWithEmpty(
+      //Test manually
       String username,
       String password,
       boolean usernameIsEmpty,
@@ -107,11 +108,13 @@ public class LoginTest extends TestEnvironment {
     // Input username and password and click login button
     WebElement usernameInput = driver.findElement(By.name("username"));
     usernameInput.clear();
+    usernameInput.click();
     if (!usernameIsEmpty) {
       usernameInput.sendKeys(username);
     }
     WebElement passwordInput = driver.findElement(By.name("password"));
     passwordInput.clear();
+    passwordInput.click();
     if (!passwordIsEmpty) {
       passwordInput.sendKeys(password);
     }
